@@ -12,6 +12,7 @@ The repository contains a Vite frontend and an Express API deployed separately:
 2. Set the service environment variables:
    - `FRONTEND_URL`: the deployed Netlify site origin, for example
      `https://your-site.netlify.app` (no trailing slash).
+     Netlify deploy-preview origins for this same site are also allowed.
    - `MONGO_URI`: the MongoDB connection string. Configure MongoDB Atlas network
      access to allow connections from Render.
    - `JWT_SECRET`: a long, random secret.
