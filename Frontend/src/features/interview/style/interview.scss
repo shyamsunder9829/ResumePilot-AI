@@ -21,7 +21,7 @@ $severity-low: #3fb950;
 // ── Page Shell ────────────────────────────────────────────────────────────────
 .interview-page {
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 72px);
     background-color: $bg-page;
     color: $text-primary;
     font-family: $font-stack;
@@ -114,9 +114,10 @@ $severity-low: #3fb950;
 .interview-content {
     flex: 1;
     padding: 1.75rem 2rem;
-    overflow-y: auto;
+    min-width: 0;
+    overflow-y: visible;
     min-height: initial;
-    max-height: calc(100vh - 3rem);
+    max-height: none;
     padding-bottom: 5rem;
     align-items: flex-start;
 
@@ -475,5 +476,234 @@ $severity-low: #3fb950;
         color: $severity-low;
         background-color: rgba($severity-low, 0.1);
         border-color: rgba($severity-low, 0.25);
+    }
+}
+
+.interview-error,
+.interview-error-message {
+    color: #ff9db9;
+}
+
+.interview-error {
+    display: flex;
+    min-height: calc(100vh - 72px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.5rem;
+    background: $bg-page;
+    text-align: center;
+
+    h1 {
+        font-size: clamp(1.35rem, 4vw, 2rem);
+    }
+
+    p {
+        max-width: 560px;
+        line-height: 1.6;
+    }
+
+    a {
+        color: #ff6b9d;
+    }
+}
+
+.interview-error-message {
+    margin-bottom: 1rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba($accent, 0.35);
+    border-radius: 0.5rem;
+    background: rgba($accent, 0.08);
+}
+
+@media (max-width: 1050px) {
+    .interview-page {
+        min-height: calc(100vh - 72px);
+        padding: 1rem;
+    }
+
+    .interview-layout {
+        display: grid;
+        min-width: 0;
+        grid-template-columns: minmax(0, 1fr);
+        justify-content: initial;
+    }
+
+    .interview-divider {
+        display: none;
+    }
+
+    .interview-nav {
+        width: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid $border-color;
+
+        .nav-content {
+            display: flex;
+            min-width: 0;
+            flex: 1 1 100%;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        &__label {
+            display: none;
+        }
+
+        &__item {
+            width: auto;
+            min-width: max-content;
+            flex: 1 0 auto;
+            justify-content: center;
+        }
+
+        > .button {
+            min-height: 42px;
+            margin-top: 0.75rem;
+        }
+    }
+
+    .interview-content {
+        min-width: 0;
+        max-height: none;
+        overflow: visible;
+        padding: 1.5rem;
+    }
+
+    .interview-sidebar {
+        width: auto;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        border-top: 1px solid $border-color;
+    }
+
+    .sidebar-divider {
+        display: none;
+    }
+
+    .match-score {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        justify-items: start;
+        gap: 0.4rem 0.8rem;
+
+        &__label {
+            grid-column: 1 / -1;
+        }
+
+        &__ring {
+            grid-row: span 2;
+            width: 72px;
+            height: 72px;
+        }
+
+        &__sub {
+            align-self: center;
+            text-align: left;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .interview-page {
+        padding: 0.65rem;
+    }
+
+    .interview-layout {
+        border-radius: 0.75rem;
+    }
+
+    .interview-nav {
+        padding: 0.7rem;
+
+        &__item {
+            gap: 0.45rem;
+            padding: 0.6rem 0.7rem;
+            font-size: 0.78rem;
+        }
+
+        > .button {
+            width: 100%;
+        }
+    }
+
+    .interview-content {
+        padding: 1rem 0.8rem 1.5rem;
+    }
+
+    .content-header {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        h2 {
+            font-size: 1rem;
+        }
+    }
+
+    .q-card__header {
+        gap: 0.55rem;
+        padding: 0.8rem;
+    }
+
+    .q-card__question {
+        font-size: 0.84rem;
+        overflow-wrap: anywhere;
+    }
+
+    .q-card__body {
+        padding-inline: 0.8rem;
+    }
+
+    .q-card__section p {
+        overflow-wrap: anywhere;
+    }
+
+    .roadmap-list::before {
+        left: 19px;
+    }
+
+    .roadmap-day {
+        padding-left: 2.7rem;
+
+        &::before {
+            left: 12px;
+        }
+
+        &__header {
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        &__focus {
+            font-size: 0.9rem;
+            overflow-wrap: anywhere;
+        }
+    }
+
+    .interview-sidebar {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 1rem;
+    }
+
+    .match-score {
+        grid-template-columns: 72px 1fr;
+    }
+
+    .skill-gaps__list {
+        gap: 0.4rem;
+    }
+
+    .skill-tag {
+        max-width: 100%;
+        overflow-wrap: anywhere;
     }
 }

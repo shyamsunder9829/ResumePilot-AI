@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { useNavigate, Link } from 'react-router'
 import "../auth.form.scss"
 import { useAuth } from '../hooks/useAuth'
+import LoadingScreen from "../../../components/LoadingScreen"
 
 const Login = () => {
 
@@ -10,15 +11,21 @@ const Login = () => {
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
+    const [ formError, setFormError ] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleLogin({email,password})
-        navigate('/')
+        setFormError("")
+        try {
+            await handleLogin({email,password})
+            navigate('/')
+        } catch (error) {
+            setFormError(error.response?.data?.message || "Could not log in. Check your details and try again.")
+        }
     }
 
     if(loading){
-        return (<main><h1>Loading.......</h1></main>)
+        return <LoadingScreen message="Signing you in..." />
     }
 
 
@@ -27,6 +34,7 @@ const Login = () => {
             <div className="form-container">
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
+                    {formError && <p className="auth-error" role="alert">{formError}</p>}
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
                         <input

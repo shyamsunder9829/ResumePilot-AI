@@ -50,5 +50,9 @@ export const generateResumePdf = async ({ interviewReportId }) => {
         responseType: "blob"
     })
 
+    if (!response.data?.size) {
+        throw new Error("The server returned an empty resume file.")
+    }
+
     return response.data
 }

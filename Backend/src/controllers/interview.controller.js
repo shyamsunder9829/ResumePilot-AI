@@ -75,7 +75,10 @@ async function getAllInterviewReportsController(req, res) {
 async function generateResumePdfController(req, res) {
     const { interviewReportId } = req.params
 
-    const interviewReport = await interviewReportModel.findById(interviewReportId)
+    const interviewReport = await interviewReportModel.findOne({
+        _id: interviewReportId,
+        user: req.user.id
+    })
 
     if (!interviewReport) {
         return res.status(404).json({
@@ -83,9 +86,22 @@ async function generateResumePdfController(req, res) {
         })
     }
 
-    const { resume, jobDescription, selfDescription } = interviewReport
+    const { resume, selfDescription, title } = interviewReport
 
-    const pdfBuffer = await generateResumePdf({ resume, jobDescription, selfDescription })
+    let pdfBuffer
+    try {
+        pdfBuffer = await generateResumePdf({
+            resume,
+            selfDescription,
+            jobTitle: title,
+            candidateName: req.user.username
+        })
+    } catch (error) {
+        console.error("Resume PDF generation failed:", error)
+        return res.status(500).json({
+            message: "Resume PDF generation failed. Please try again later."
+        })
+    }
 
     res.set({
         "Content-Type": "application/pdf",
