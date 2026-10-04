@@ -5,6 +5,8 @@
         radial-gradient(ellipse at 85% 0%, rgba(255, 45, 120, 0.09), transparent 34rem),
         #0d1117;
     color: #e6edf3;
+    display: flex;
+    flex-direction: column;
 }
 
 .dashboard-header,
